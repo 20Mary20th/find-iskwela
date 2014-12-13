@@ -1,0 +1,6 @@
+name = Hackaparty
+description = Hackaparty
+core = 7.x
+package = Custom
+
+

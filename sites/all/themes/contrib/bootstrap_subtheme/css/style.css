@@ -1,0 +1,101 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+
+body{
+  border: 0;
+  margin:0;
+}
+section{
+  border:0;
+}
+#block-system-user-menu{
+  width: 150px;
+}
+#container{
+  width: 100%;
+}
+header{
+  width: 100%;
+  float: right;
+  position: absolute;
+  z-index: 9;
+}
+.navbar-brand{
+  position: fixed;
+  top: 70px;
+}
+.name{
+  font-size: 30px;
+}
+.region .region-content{
+  border:0;
+  margin: 0;
+  padding: 0;
+}
+#navbar{
+  float: right;
+  background: none;
+  border: 0;
+  margin: 0;
+}
+/**
+    Login Form Style
+
+*****/
+
+
+#block-user-login{
+  background-color: #ff3e3e;
+  padding: 20px;
+  max-width: 400px;
+  margin: 50px;
+  z-index: 9999;
+  top:50px;
+  position: absolute;
+}
+.block:first-child h2.block-title{
+  color: #fff;
+}
+label{
+  color: #fff;
+}
+#edit-submit{
+  background: #666;
+  color: #fff;
+  border: 0;
+}
+#block-user-login ul{
+  list-style-type: none; padding: 0;
+}
+#block-user-login a{
+  color: #fff;
+}
+
+/****
+
+    End of Login Form Style
+
+****/
+
+.main-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+.mapContainer{
+  float: right;
+  width: 100%;
+}
+footer{
+  position: fixed;
+  bottom:-25px;
+  width: 150px;
+}

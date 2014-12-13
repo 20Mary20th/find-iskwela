@@ -1,0 +1,96 @@
+<?php
+
+
+function hackaparty_menu() {
+
+  $items['hackaparty'] = array(
+ 		'title' => '',
+ 		'page callback' => '_hackaparty_home', 		
+ 		'access callback' => TRUE,
+ 		'type' => MENU_NORMAL_ITEM,
+ 	);
+
+ 	$items['hackaparty_schools'] = array(
+ 		'title' => 'Home page',
+ 		'page callback' => '_hackaparty_schools', 		
+ 		'access callback' => TRUE,
+ 		'type' =>  MENU_CALLBACK,
+ 		'delivery callback' => 'drupal_json_output',
+ 	);
+
+
+// 	return $items;
+
+ 	$items['hackaparty_proximity'] = array( 		
+ 		'page callback' => '_hackaparty_proximity', 		
+ 		'access callback' => TRUE,
+ 		'type' => MENU_NORMAL_ITEM,
+ 	);
+
+$items['hackaparty_proximity_schools/%/%'] = array( 		
+ 		'page callback' => '_hackaparty_proximity_schools', 		
+ 		'page arguments' => array(1,2),
+ 		'access callback' => TRUE,
+ 		'type' => MENU_CALLBACK,
+ 		'delivery callback' => 'drupal_json_output',
+ 	);
+
+return $items;
+ }
+
+function _hackaparty_home() {
+	drupal_add_css('http://apidocs-legacy-documentations3bucket.s3-website-eu-west-1.amazonaws.com/apiexplorer/examples/templates/js/exampleHelpers.css', 'external');
+	drupal_add_js('http://js.cit.api.here.com/se/2.5.4/jsl.js?with=all', 'external');
+	drupal_add_js('http://apidocs-legacy-documentations3bucket.s3-website-eu-west-1.amazonaws.com/apiexplorer/examples/templates/js/exampleHelpers.js', 'external');
+	drupal_add_js(drupal_get_path('module', 'hackaparty') . '/js/hackaparty.js');
+
+		
+		
+	 
+	return "<div style='width: 100%; height: 600px;border:0;margin:0;' id='mapContainer'></div>";
+}
+
+function _hackaparty_schools() {
+	$query = new EntityFieldQuery();
+	$query->entityCondition('entity_type', 'node')
+	  ->entityCondition('bundle', 'school');
+
+	$result = $query->execute();
+
+	if (isset($result['node'])) {
+    $school_nids = array_keys($result['node']);
+    $schools = entity_load('node', $school_nids);
+  }
+
+	return drupal_json_output($schools);
+}
+
+
+
+function _hackaparty_proximity() {
+  drupal_add_css('http://apidocs-legacy-documentations3bucket.s3-website-eu-west-1.amazonaws.com/apiexplorer/examples/templates/js/exampleHelpers.css', 'external');
+	drupal_add_js('http://js.cit.api.here.com/se/2.5.4/jsl.js?with=all', 'external');
+	drupal_add_js('http://apidocs-legacy-documentations3bucket.s3-website-eu-west-1.amazonaws.com/apiexplorer/examples/templates/js/exampleHelpers.js', 'external');
+	drupal_add_js(drupal_get_path('module', 'hackaparty') . '/js/proximity.js');
+
+
+	return "<div style='width: 0px; height: 0px' id='mapContainer_center'></div>" .
+	"<div style='width: 100%; height: 600px' id='mapContainer'></div>";		
+}
+
+function _hackaparty_proximity_schools($lat, $lng) {  
+	$result = db_query(
+		"select entity_id " .
+		"from field_data_field_geolocation " .
+		"where field_geolocation_lat > (14.532633) " .
+			"and field_geolocation_lng > (120.994913) "
+	);
+
+	$nids = array();
+	foreach ($result as $key => $record) {		
+		$nids[] =  node_load($record->entity_id);
+	}
+
+  return $nids;
+}
+
